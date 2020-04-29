@@ -1,47 +1,47 @@
 #' Compute effective entropy
 #'
-#' @param dissimilarity A dissimilarity matrix
+#' @param D A dissimilarity matrix
 #' @param f Weigh array
 #' @param Nloop Number of loops
 #' @param Nfine finesse of powers
 #' @param pa initial power
 #' @param pb final power
-#' @param power_crit change initial conditions
-#' @examples
+#' @example
 #' M <- matrix(seq(9), nrow = 3)
 #' f <- rowSums(M) / sum(M)
 #' D <- dist(f*M)
 #' effective_entropy(D,f)
 #' @export
-effective_entropy <- function(dissimilarity, f,
+effective_entropy <- function(D, f,
                               Nloop = 4000, Nfine=300,
-                              pa = -4, pb = 3, power_crit = -0.115148
-) {
+                              pa = -4, pb = 3
+                              ) {
 
-  n <- nrow(dissimilarity)
-
-  if (all(dissimilarity + diag(n) > matrix(0, n,n)) &&
-      dissimilarity == t(dissimilarity)) {
-    warning("dissimilarity is not proper\n")
+  if (class(D) == "dist") {
+    D <- as.matrix(D)
+  } else {
+    D <- as.matrix(stats::as.dist(D))
   }
+  n <- nrow(D)
+
   power_selection <- pa + (seq(1:Nfine) - 1) * (pb - pa) / (Nfine - 1)
   Nsteps_beta <- length(power_selection)
   beta_rel <- c()
 
   counter_seq <- seq(length(power_selection))
 
-  Delta <- as.numeric(0.5 * t(f) %*% dissimilarity %*% f)
-  Dif <- dissimilarity %*% f - Delta
+  Delta <- as.numeric(0.5 * t(f) %*% D %*% f)
+  Dif <- D %*% f - Delta
 
   iterations <- lapply(counter_seq, function(counter) {
     power <- power_selection[[counter]]
     beta_rel <- 10^power
     beta <- beta_rel * as.numeric(1 / Delta) # fixes the inverse temperature
-    S <- as.matrix(exp(-beta * dissimilarity)) # creates a dissimilarity matrix
+    S <- as.matrix(exp(-beta * D)) # creates a D matrix
     b <- as.vector(S %*% f) #  banality
 
     ######### usual approach by memberships z_{ij}, with usual EM-iteration
-    index <- which.min(dissimilarity %*% f) # index de l'observation la plus proche
+    index <- which.min(D %*% f) # index de l'observation la plus proche
     indic_min <- as.numeric(1:n == index) # 0 partout, sauf 1 sur l'observation "centrale"
 
     rho <- as.vector(indic_min)
@@ -50,7 +50,8 @@ effective_entropy <- function(dissimilarity, f,
     HR <- 0 # group entropy
     Ty <- 1
 
-    # Z <- diag(n) # initialisation du clustering soft, efficient for beta large (and Niter, the number of iterations, can be small, convergence occurs rapidly: pure stayers)
+    # Z <- diag(n) # initialisation du clustering soft, efficient for beta large
+    #(and Niter, the number of iterations, can be small, convergence occurs rapidly: pure stayers)
 
     # initialisation alternative, BIEN meilleure pour les hautes temperatures
     Z <- matrix(0, n, n)

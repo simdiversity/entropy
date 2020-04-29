@@ -2,16 +2,15 @@
 # Generator token: 10BE3573-1514-4C36-9D1C-5A225CD40393
 
 #' Use soft clustering algorithm
-NULL
-
+#'
 #' @param fr Weight vector
 #' @param Zr The Z matrix
 #' @param Sr the S matrix
 #' @param nloops the number of loops to execute
 #'
 #' @return a list containing rhos and Zs
-#' @export
-#' @examples
+#'
+#' @example
 #' n <- 3
 #' power = -.5
 #' M <- matrix(seq(9), nrow = n)
@@ -25,8 +24,10 @@ NULL
 #' Z <- matrix(0, n, n)
 #' Z[, index] <- 1
 #' Z <-  1e-20 * matrix(1, n, n) + (1 -  1e-20) * Z
-#' soft_clustering(f, Z, S, Nloop=1000)
+#' soft_clustering(f, Z, S, nloops = 1000)
+#'
+#' @export
 soft_clustering <- function(fr, Zr, Sr, nloops) {
-    .Call(`_simdiversity_entropy_soft_clustering`, fr, Zr, Sr, nloops)
+    .Call('_simdiversity_entropy_soft_clustering', PACKAGE = 'simdiversity.entropy', fr, Zr, Sr, nloops)
 }
 

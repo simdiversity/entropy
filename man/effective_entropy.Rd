@@ -4,18 +4,10 @@
 \alias{effective_entropy}
 \title{Compute effective entropy}
 \usage{
-effective_entropy(
-  dissimilarity,
-  f,
-  Nloop = 4000,
-  Nfine = 300,
-  pa = -4,
-  pb = 3,
-  power_crit = -0.115148
-)
+effective_entropy(D, f, Nloop = 4000, Nfine = 300, pa = -4, pb = 3)
 }
 \arguments{
-\item{dissimilarity}{A dissimilarity matrix}
+\item{D}{A dissimilarity matrix}
 
 \item{f}{Weigh array}
 
@@ -26,15 +18,7 @@ effective_entropy(
 \item{pa}{initial power}
 
 \item{pb}{final power}
-
-\item{power_crit}{change initial conditions}
 }
 \description{
 Compute effective entropy
-}
-\examples{
-M <- matrix(seq(9), nrow = 3)
-f <- rowSums(M) / sum(M)
-D <- dist(f*M)
-effective_entropy(D,f)
 }

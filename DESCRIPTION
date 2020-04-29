@@ -5,8 +5,9 @@ Version: 1.0
 Date: 2020-04-29
 Author: Mattia Egloff <megloff1@unil.ch> and Fran\\u00e7ois Bavaud <fbavaud@unil.ch>
 Maintainer: Mattia Egloff <megloff1@unil.ch>
-Description: More about what it does (maybe more than one line)
+Description: Entropy computations for the simdiversity project.
 License: MIT + file LICENSE
+Encoding: UTF-8
 Imports: Rcpp (>= 1.0.4)
 LinkingTo: Rcpp, RcppArmadillo
 RoxygenNote: 7.1.0

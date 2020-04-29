@@ -6,16 +6,16 @@
 
 // [[Rcpp::depends(RcppArmadillo)]]
 
-//' @title Use soft clustering algorithm
-//
+//' Use soft clustering algorithm
+//'
 //' @param fr Weight vector
 //' @param Zr The Z matrix
 //' @param Sr the S matrix
 //' @param nloops the number of loops to execute
 //'
 //' @return a list containing rhos and Zs
-//' @export
-//' @examples
+//'
+//' @example
 //' n <- 3
 //' power = -.5
 //' M <- matrix(seq(9), nrow = n)
@@ -29,7 +29,9 @@
 //' Z <- matrix(0, n, n)
 //' Z[, index] <- 1
 //' Z <-  1e-20 * matrix(1, n, n) + (1 -  1e-20) * Z
-//' soft_clustering(f, Z, S, Nloop=1000)
+//' soft_clustering(f, Z, S, nloops = 1000)
+//'
+//' @export
 // [[Rcpp::export]]
 Rcpp::List soft_clustering(Rcpp::NumericVector fr, Rcpp::NumericMatrix Zr, Rcpp::NumericMatrix Sr, int nloops) {
 
