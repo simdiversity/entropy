@@ -3,7 +3,11 @@ Type: Package
 Title: Entropy computations
 Version: 1.0
 Date: 2020-04-29
-Author: Mattia Egloff <megloff1@unil.ch> and Fran\\u00e7ois Bavaud <fbavaud@unil.ch>
+Authors@R: person("Mattia", "Egloff", email = "megloff1@unil.ch",
+                  role = c("aut", "cre"))
+            person("Fran\\u00e7ois", "Bavaud", email = "fbavaud@unil.ch",
+                  role = c("aut", "cre", "cph"))
+Authors: Mattia Egloff and Fran\\u00e7ois Bavaud
 Maintainer: Mattia Egloff <megloff1@unil.ch>
 Description: Entropy computations for the simdiversity project.
 License: MIT + file LICENSE
