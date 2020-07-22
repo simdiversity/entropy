@@ -9,12 +9,13 @@
 #' entropy(D,f)
 #' @export
 entropy <- function(D, f) {
-  if (class(D) == "dist") {
+  if ("dist" %in% class(D)) {
     D <- as.matrix(D)
   } else {
     D <- as.matrix(stats::as.dist(D))
   }
-  s <- 1.0 - D/sum(D) # n times n similarity matrix
+  n <- nrow(D)
+  s <- matrix(1.0, nrow = n, ncol = n) - (D/sum(D)) # n times n similarity matrix
   b <- s %*% f # banalities
   R <- -sum(f %*% log(b)) # 0.5077364 reduced entropy
   exp(R) # 1.661526 number of effective varieties

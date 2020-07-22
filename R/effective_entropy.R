@@ -17,7 +17,7 @@ effective_entropy <- function(D, f,
                               pa = -4, pb = 3
                               ) {
 
-  if (class(D) == "dist") {
+  if ("dist" %in% class(D)) {
     D <- as.matrix(D)
   } else {
     D <- as.matrix(stats::as.dist(D))
